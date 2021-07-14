@@ -33,6 +33,9 @@ import {
   Rule,
   RuleSet,
   EmptyWarningContext,
+  DataTypeParent,
+  DataTypeChildren,
+  DataTypeBuilder,
 } from './query-builder.interfaces';
 import {
   ChangeDetectorRef,
@@ -113,6 +116,13 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   };
   @Input() disabled: boolean;
   @Input() data: RuleSet = { condition: 'and', rules: [] };
+  
+
+  // Mark Changes
+  @Input() DataTypeBuilder: DataTypeBuilder = { fields: [] }
+  @Input() DataTypeParent: Array<DataTypeParent> = [];
+  @Input() DataTypeChildren: Array<DataTypeChildren> = [];
+  // End
 
   // For ControlValueAccessor interface
   public onChangeCallback: () => void;
@@ -167,13 +177,18 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
 
   // ----------OnInit Implementation----------
 
-  ngOnInit() { }
+  dataTypeArr: Array<any> = []
+  ngOnInit() { 
+    const dataTypeArr = ['AccountConfig','InvoiceRule']
+    this.dataTypeArr = dataTypeArr;
+  }
 
   // ----------OnChanges Implementation----------
 
   ngOnChanges(changes: SimpleChanges) {
     const config = this.config;
     const type = typeof config;
+
     if (type === 'object') {
       this.fields = Object.keys(config.fields).map((value) => {
         const field = config.fields[value];
@@ -268,6 +283,12 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     return templates.find((item) => item.queryInputType === type);
   }
 
+  findDataTypeParent(type: string) {
+    // console.log(this.DataTypeParent)
+      const dataType = this.DataTypeParent;
+      return dataType.find((item) => item.field.toLowerCase() == type.toLowerCase());
+  }
+
   getOperators(field: string): string[] {
     if (this.operatorsCache[field]) {
       return this.operatorsCache[field];
@@ -300,6 +321,21 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     // Cache reference to array object, so it won't be computed next time and trigger a rerender.
     this.operatorsCache[field] = operators;
     return operators;
+  }
+
+  hideRuleSet: boolean = false;
+  getDataType(entity: string, parentValue: any) {
+
+    if(parentValue === undefined){
+      return  (this.DataTypeParent).map((value) => {
+        return value.field;
+      });
+    }
+
+    if( parentValue.dataType){
+      return this.findDataTypeParent(parentValue.dataType).values;
+    }
+ 
   }
 
   getFields(entity: string): Field[] {
@@ -424,18 +460,21 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     this.handleDataChange();
   }
 
+  addRuleBool: boolean = false;
+
   addRuleSet(parent?: RuleSet): void {
+    // console.log(parent);    
     if (this.disabled) {
       return;
     }
 
     parent = parent || this.data;
-    if (this.config.addRuleSet) {
-      this.config.addRuleSet(parent);
-    } else {
-      parent.rules = parent.rules.concat([{ condition: 'and', rules: [] }]);
-    }
 
+    if (this.config.addRuleSet) {
+      // this.config.addRuleSet(parent);
+    } else {
+      parent.rules = parent.rules.concat([{ condition: 'and', dataType: null, rules: [] }]);
+    }
     this.handleTouched();
     this.handleDataChange();
   }
@@ -473,6 +512,16 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     if (nativeElement && nativeElement.firstElementChild) {
       nativeElement.style.maxHeight = (nativeElement.firstElementChild.clientHeight + 8) + 'px';
     }
+  }
+
+  changeDataType(value: string){
+    console.log(value);
+    if(this.findDataTypeParent(value) === undefined){
+      this.hideRuleSet = true;  
+    }
+    this.data.dataType = value;
+    this.handleTouched();
+    this.handleDataChange();
   }
 
   changeCondition(value: string): void {
@@ -518,6 +567,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   changeField(fieldValue: string, rule: Rule): void {
+
     if (this.disabled) {
       return;
     }

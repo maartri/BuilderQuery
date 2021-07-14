@@ -1,8 +1,23 @@
 import { ValidationErrors } from '@angular/forms';
 
+export interface DataTypeBuilder {
+  fields: Array<any>
+}
+
+export interface DataTypeChildren{
+  field: string,
+  values: Array<string>
+}
+
+export interface DataTypeParent{
+  field: string,
+  values: Array<string>
+}
+
 export interface RuleSet {
   condition: string;
   rules: Array<RuleSet | Rule>;
+  dataType?: string,
   collapsed?: boolean;
   isChild?: boolean;
 }

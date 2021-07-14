@@ -20,10 +20,10 @@
       <button type="button" (click)="addRule()" [ngClass]="getClassNames('button')" [disabled]=disabled>
         <i [ngClass]="getClassNames('addIcon')"></i> Rule
       </button>
-      <button type="button" (click)="addRuleSet()" [ngClass]="getClassNames('button')" *ngIf="allowRuleset" [disabled]=disabled>
+      <button type="button" (click)="addRuleSet()" [ngClass]="getClassNames('button')" *ngIf="!hideRuleSet" [disabled]=disabled>
         <i [ngClass]="getClassNames('addIcon')"></i> Ruleset
       </button>
-      <ng-container *ngIf="!!parentValue && allowRuleset">
+      <ng-container *ngIf="!!parentValue">
         <button type="button" (click)="removeRuleSet()" [ngClass]="getClassNames('button', 'removeButton')" [disabled]=disabled>
           <i [ngClass]="getClassNames('removeIcon')"></i>
         </button>
@@ -47,6 +47,12 @@
           value="or" #orOption />
         <label (click)="changeCondition(orOption.value)" [ngClass]="getClassNames('switchLabel')">OR</label>
       </div>
+      <div>
+        <select [(ngModel)]="data.dataType" (change)="changeDataType(dataType.value)" #dataType>
+          <option *ngFor="let d of getDataType(data.dataType,parentValue)" [value]='d'>{{ d }}</option>
+        </select>
+      </div>
+
     </div>
   </ng-template>
 </div>
@@ -160,7 +166,7 @@
             [parentEntityTemplate]="parentEntityTemplate || entityTemplate" [parentSwitchGroupTemplate]="parentSwitchGroupTemplate || switchGroupTemplate"
             [parentButtonGroupTemplate]="parentButtonGroupTemplate || buttonGroupTemplate" [parentRemoveButtonTemplate]="parentRemoveButtonTemplate || removeButtonTemplate"
             [parentEmptyWarningTemplate]="parentEmptyWarningTemplate || emptyWarningTemplate" [parentArrowIconTemplate]="parentArrowIconTemplate || arrowIconTemplate"
-            [parentValue]="data" [classNames]="classNames" [config]="config" [allowRuleset]="allowRuleset"
+            [parentValue]="data" [classNames]="classNames" [config]="config" [DataTypeBuilder]="DataTypeBuilder" [DataTypeParent]="DataTypeParent" [allowRuleset]="allowRuleset"
             [allowCollapse]="allowCollapse" [emptyMessage]="emptyMessage" [operatorMap]="operatorMap">
           </query-builder>
 

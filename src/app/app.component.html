@@ -1,9 +1,11 @@
-<query-builder [formControl]='queryCtrl' [config]='currentConfig' 
+<query-builder [formControl]='queryCtrl' [config]='config' 
             [allowRuleset]='allowRuleset' [allowCollapse]='allowCollapse' 
-            [persistValueOnFieldChange]='persistValueOnFieldChange' 
-           ></query-builder>
+            [DataTypeBuilder]="dataTypeBuilder"
+            [DataTypeParent]="dataTypeParent"
+            [DataTypeChildren]="dataTypeChildren"
+            [persistValueOnFieldChange]='persistValueOnFieldChange'></query-builder>
 
 
             
-
+  {{ query | json }}  
 <router-outlet></router-outlet>
