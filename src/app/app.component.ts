@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import {  QueryBuilderConfig, DataTypeParent, DataTypeChildren, DataTypeBuilder } from '../components/query-builder/query-builder.interfaces';
 
+import { QueryBuilderService } from '../components/query-builder/query-builder.service'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -384,18 +385,21 @@ export class AppComponent {
   
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private queryS: QueryBuilderService
   ) {
     this.queryCtrl = this.formBuilder.control(this.query);
     // this.currentConfig = this.config;
     this.dataTypeBuilder = { fields: this.dataTypeParent }
 
-    
+    this.queryS.changeEmitted$.subscribe(data => {
+      console.log(data);
+    });
   }
 
   changeDataType( data: any)
   {
-    console.log(data);
+    // console.log(data);
     if(data == 'AccountConfig')
     {
       this.config = {

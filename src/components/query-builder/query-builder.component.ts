@@ -52,8 +52,13 @@ import {
   ViewChild,
   ElementRef,
   EventEmitter,
-  Output
+  Output,
+  ComponentRef
 } from '@angular/core';
+
+import {
+  QueryBuilderService
+} from './query-builder.service'
 
 export const CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -177,7 +182,10 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   private removeButtonContextCache = new Map<Rule, RemoveButtonContext>();
   private buttonGroupContext: ButtonGroupContext;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) { }
+  
+
+  constructor(private changeDetectorRef: ChangeDetectorRef,
+              private queryS: QueryBuilderService) { }
 
   // ----------OnInit Implementation----------
 
@@ -474,6 +482,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
       return;
     }
 
+    // this.valueOnFieldChange = new EventEmitter(); 
     parent = parent || this.data;
     //console.log(this.data);    
     if (this.config.addRuleSet) {
@@ -522,9 +531,12 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   changeDataType(value: string){
-    this.valueOnFieldChange.emit(this.data.dataType);
-    console.log(this.data.dataType );
-    console.log(value);
+
+    this.queryS.emitChange(value);
+    // console.log(this.valueOnFieldChange)
+    // this.valueOnFieldChange.emit(value);
+    // console.log(this.data.dataType );
+    // console.log(value);
     if(this.findDataTypeParent(value) === undefined){
       this.hideRuleSet = true;  
       //this.valueOnFieldChange.emit(value);

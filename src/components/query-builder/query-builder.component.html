@@ -167,7 +167,7 @@
             [parentButtonGroupTemplate]="parentButtonGroupTemplate || buttonGroupTemplate" [parentRemoveButtonTemplate]="parentRemoveButtonTemplate || removeButtonTemplate"
             [parentEmptyWarningTemplate]="parentEmptyWarningTemplate || emptyWarningTemplate" [parentArrowIconTemplate]="parentArrowIconTemplate || arrowIconTemplate"
             [parentValue]="data" [classNames]="classNames" [config]="config" [DataTypeBuilder]="DataTypeBuilder" [DataTypeParent]="DataTypeParent" [allowRuleset]="allowRuleset"
-            [allowCollapse]="allowCollapse" [emptyMessage]="emptyMessage" [operatorMap]="operatorMap">
+            [allowCollapse]="allowCollapse" [emptyMessage]="emptyMessage" [operatorMap]="operatorMap" >
           </query-builder>
 
           <ng-container *ngIf="getEmptyWarningTemplate() as template; else defaultEmptyWarning">
