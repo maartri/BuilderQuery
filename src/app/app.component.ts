@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import {  QueryBuilderConfig, DataTypeParent, DataTypeChildren, DataTypeBuilder } from '../components/query-builder/query-builder.interfaces';
 
+import { QueryBuilderService } from '../components/query-builder/query-builder.service'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -403,12 +404,40 @@ export class AppComponent {
  
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private queryS: QueryBuilderService
   ) {
     this.queryCtrl = this.formBuilder.control(this.query);
     // this.currentConfig = this.config;
     this.dataTypeBuilder = { fields: this.dataTypeParent }
 
-    
+    this.queryS.changeEmitted$.subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  changeDataType( data: any)
+  {
+    // console.log(data);
+    if(data == 'AccountConfig')
+    {
+      this.config = {
+          
+      fields: {
+        //Account Config
+        "Client.Code":{name: 'Active',type: 'category',options: [],entity:"accountConfig"},
+        "Client.Region":{name: 'Currency',type: 'category',options: [],entity:"accountConfig"},
+        "Client.Country":{name: 'OverchargeAmount',type: 'category',options: [],entity:"accountConfig"},
+        "Client.CTLocation":{name: 'OverchargeType',type: 'category',options: [],entity:"accountConfig"},
+        "Client.CtClientParent":{name: 'UnderchargeAmount',type: 'category',options: [],entity:"accountConfig"},
+        "Client.FullName":{name: 'UnderchargeType',type: 'category',options: [],entity:"accountConfig"},
+        "Client.Division":{name: 'RunAudit',type: 'category',options: [],entity:"accountConfig"},
+        "Client.SubDiv":{name: 'RunTmsMatch',type: 'category',options: [],entity:"accountConfig"},
+        "Client.Location":{name: 'SaveTmsMatchData',type: 'category',options: [],entity:"accountConfig"},
+        "Client.SubLocation":{name: 'AddToleranceSavings',type: 'category',options: [],entity:"accountConfig"},
+        "ClientId":{name: 'RunPoMatch',type: 'category',options: [],entity:"accountConfig"},   
+      }
+    }
+    }
   }
 }

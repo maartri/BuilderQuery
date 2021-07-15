@@ -50,8 +50,15 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
-  ElementRef
+  ElementRef,
+  EventEmitter,
+  Output,
+  ComponentRef
 } from '@angular/core';
+
+import {
+  QueryBuilderService
+} from './query-builder.service'
 
 export const CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -173,7 +180,10 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   private removeButtonContextCache = new Map<Rule, RemoveButtonContext>();
   private buttonGroupContext: ButtonGroupContext;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) { }
+  
+
+  constructor(private changeDetectorRef: ChangeDetectorRef,
+              private queryS: QueryBuilderService) { }
 
   // ----------OnInit Implementation----------
 
@@ -338,6 +348,14 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
  
   }
 
+  getFields2(entity: string): any{
+    // console.log(this.DataTypeParent);
+    // console.log(this.DataTypeChildren)
+    var list = this.DataTypeChildren.find(x => x.field == entity);
+    console.log(list);
+    return list.values;
+  }
+
   getFields(entity: string): Field[] {
     if (this.entities && entity) {
       return this.fields.filter((field) => {
@@ -468,6 +486,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
       return;
     }
 
+    // this.valueOnFieldChange = new EventEmitter(); 
     parent = parent || this.data;
 
     if (this.config.addRuleSet) {
@@ -516,6 +535,12 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
 
   changeDataType(value: string){
     console.log(value);
+
+    this.queryS.emitChange(value);
+    // console.log(this.valueOnFieldChange)
+    // this.valueOnFieldChange.emit(value);
+    // console.log(this.data.dataType );
+    // console.log(value);
     if(this.findDataTypeParent(value) === undefined){
       this.hideRuleSet = true;  
     }
@@ -564,6 +589,10 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
 
     this.handleTouched();
     this.handleDataChange();
+  }
+
+  changeField2(fieldValue: string): void{
+    console.log(fieldValue);
   }
 
   changeField(fieldValue: string, rule: Rule): void {

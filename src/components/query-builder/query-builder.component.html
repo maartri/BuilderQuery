@@ -37,12 +37,12 @@
 
   <ng-template #defaultSwitchGroup>
     <div [ngClass]="getClassNames('switchGroup', 'transition')" *ngIf="data">
-      <div [ngClass]="getClassNames('switchControl')">
+      <div [ngClass]="getClassNames('switchControl')" *ngIf="data.dataType == 'Condition'">
         <input type="radio" [ngClass]="getClassNames('switchRadio')" [(ngModel)]="data.condition" [disabled]=disabled
           value="and" #andOption />
         <label (click)="changeCondition(andOption.value)" [ngClass]="getClassNames('switchLabel')">AND</label>
       </div>
-      <div [ngClass]="getClassNames('switchControl')">
+      <div [ngClass]="getClassNames('switchControl')" *ngIf="data.dataType == 'Condition'">
         <input type="radio" [ngClass]="getClassNames('switchRadio')" [(ngModel)]="data.condition" [disabled]=disabled
           value="or" #orOption />
         <label (click)="changeCondition(orOption.value)" [ngClass]="getClassNames('switchLabel')">OR</label>
@@ -99,6 +99,18 @@
             <ng-container *ngIf="getFieldTemplate() as template; else defaultField">
               <ng-container *ngTemplateOutlet="template; context: getFieldContext(rule)"></ng-container>
             </ng-container>
+
+
+            <!-- <ng-template #defaultField>
+              <div [ngClass]="getClassNames('fieldControlSize')">
+                <select [ngClass]="getClassNames('fieldControl')" [(ngModel)]="rule.field" (ngModelChange)="changeField2($event)"
+                  [disabled]="disabled">
+                  <option *ngFor="let field of getFields2(data.dataType)" [ngValue]="field">
+                    {{field}}
+                  </option>
+                </select>
+              </div>
+            </ng-template> -->
 
             <ng-template #defaultField>
               <div [ngClass]="getClassNames('fieldControlSize')">
@@ -167,7 +179,7 @@
             [parentButtonGroupTemplate]="parentButtonGroupTemplate || buttonGroupTemplate" [parentRemoveButtonTemplate]="parentRemoveButtonTemplate || removeButtonTemplate"
             [parentEmptyWarningTemplate]="parentEmptyWarningTemplate || emptyWarningTemplate" [parentArrowIconTemplate]="parentArrowIconTemplate || arrowIconTemplate"
             [parentValue]="data" [classNames]="classNames" [config]="config" [DataTypeBuilder]="DataTypeBuilder" [DataTypeParent]="DataTypeParent" [allowRuleset]="allowRuleset"
-            [allowCollapse]="allowCollapse" [emptyMessage]="emptyMessage" [operatorMap]="operatorMap">
+            [allowCollapse]="allowCollapse" [emptyMessage]="emptyMessage" [operatorMap]="operatorMap" >
           </query-builder>
 
           <ng-container *ngIf="getEmptyWarningTemplate() as template; else defaultEmptyWarning">
