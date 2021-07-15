@@ -332,10 +332,7 @@ export class AppComponent {
     },
     fields: {
       age: {name: 'Age', type: 'number', entity: 'physical'},
-      gender: {
-        name: 'Gender',
-        entity: 'physical',
-        type: 'category',
+      gender: {name: 'Gender',entity: 'physical',type: 'category',
         options: [
           {name: 'Male', value: 'm'},
           {name: 'Female', value: 'f'}
@@ -344,9 +341,7 @@ export class AppComponent {
       name: {name: 'Name', type: 'string', entity: 'nonphysical'},
       notes: {name: 'Notes', type: 'textarea', operators: ['=', '!='], entity: 'nonphysical'},
       educated: {name: 'College Degree?', type: 'boolean', entity: 'nonphysical'},
-      birthday: {name: 'Birthday', type: 'date', operators: ['=', '<=', '>'],
-        defaultValue: (() => new Date()), entity: 'nonphysical'
-      },
+      birthday: {name: 'Birthday', type: 'date', operators: ['=', '<=', '>'],defaultValue: (() => new Date()), entity: 'nonphysical'},
       school: {name: 'School', type: 'string', nullable: true, entity: 'nonphysical'},
       occupation: {
         name: 'Occupation',
@@ -365,33 +360,19 @@ export class AppComponent {
   public dataTypeBuilder: DataTypeBuilder;
 
   public config: QueryBuilderConfig = {
+    
     fields: {
-      age: {name: 'Age', type: 'number'},
-      gender: {
-        name: 'Gender',
-        type: 'category',
-        options: [
-          {name: 'Male', value: 'm'},
-          {name: 'Female', value: 'f'}
-        ]
-      },
-      name: {name: 'Name', type: 'string'},
-      notes: {name: 'Notes', type: 'textarea', operators: ['=', '!=']},
-      educated: {name: 'College Degree?', type: 'boolean'},
-      birthday: {name: 'Birthday', type: 'date', operators: ['=', '<=', '>'],
-        defaultValue: (() => new Date())
-      },
-      school: {name: 'School', type: 'string', nullable: true},
-      occupation: {
-        name: 'Occupation',
-        type: 'category',
-        options: [
-          {name: 'Student', value: 'student'},
-          {name: 'Teacher', value: 'teacher'},
-          {name: 'Unemployed', value: 'unemployed'},
-          {name: 'Scientist', value: 'scientist'}
-        ]
-      }
+      // "Client.Code":{name: 'Active',type: 'category',options: [],entity:"accountConfig"},
+      // "Client.Region":{name: 'Currency',type: 'category',options: [],entity:"accountConfig"},
+      // "Client.Country":{name: 'OverchargeAmount',type: 'category',options: [],entity:"accountConfig"},
+      // "Client.CTLocation":{name: 'OverchargeType',type: 'category',options: [],entity:"accountConfig"},
+      // "Client.CtClientParent":{name: 'UnderchargeAmount',type: 'category',options: [],entity:"accountConfig"},
+      // "Client.FullName":{name: 'UnderchargeType',type: 'category',options: [],entity:"accountConfig"},
+      // "Client.Division":{name: 'RunAudit',type: 'category',options: [],entity:"accountConfig"},
+      // "Client.SubDiv":{name: 'RunTmsMatch',type: 'category',options: [],entity:"accountConfig"},
+      // "Client.Location":{name: 'SaveTmsMatchData',type: 'category',options: [],entity:"accountConfig"},
+      // "Client.SubLocation":{name: 'AddToleranceSavings',type: 'category',options: [],entity:"accountConfig"},
+      // "ClientId":{name: 'RunPoMatch',type: 'category',options: [],entity:"accountConfig"},   
     }
   };
 
@@ -400,7 +381,7 @@ export class AppComponent {
   public allowCollapse: boolean;
   public persistValueOnFieldChange: boolean = false;
 
- 
+  
 
   constructor(
     private formBuilder: FormBuilder
@@ -410,5 +391,30 @@ export class AppComponent {
     this.dataTypeBuilder = { fields: this.dataTypeParent }
 
     
+  }
+
+  changeDataType( data: any)
+  {
+    console.log(data);
+    if(data == 'AccountConfig')
+    {
+      this.config = {
+          
+      fields: {
+        //Account Config
+        "Client.Code":{name: 'Active',type: 'category',options: [],entity:"accountConfig"},
+        "Client.Region":{name: 'Currency',type: 'category',options: [],entity:"accountConfig"},
+        "Client.Country":{name: 'OverchargeAmount',type: 'category',options: [],entity:"accountConfig"},
+        "Client.CTLocation":{name: 'OverchargeType',type: 'category',options: [],entity:"accountConfig"},
+        "Client.CtClientParent":{name: 'UnderchargeAmount',type: 'category',options: [],entity:"accountConfig"},
+        "Client.FullName":{name: 'UnderchargeType',type: 'category',options: [],entity:"accountConfig"},
+        "Client.Division":{name: 'RunAudit',type: 'category',options: [],entity:"accountConfig"},
+        "Client.SubDiv":{name: 'RunTmsMatch',type: 'category',options: [],entity:"accountConfig"},
+        "Client.Location":{name: 'SaveTmsMatchData',type: 'category',options: [],entity:"accountConfig"},
+        "Client.SubLocation":{name: 'AddToleranceSavings',type: 'category',options: [],entity:"accountConfig"},
+        "ClientId":{name: 'RunPoMatch',type: 'category',options: [],entity:"accountConfig"},   
+      }
+    }
+    }
   }
 }

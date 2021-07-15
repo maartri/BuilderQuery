@@ -50,7 +50,9 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
-  ElementRef
+  ElementRef,
+  EventEmitter,
+  Output
 } from '@angular/core';
 
 export const CONTROL_VALUE_ACCESSOR: any = {
@@ -147,6 +149,8 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   @Input() parentChangeCallback: () => void;
   @Input() parentTouchedCallback: () => void;
   @Input() persistValueOnFieldChange: boolean = false;
+  @Output() valueOnFieldChange = new EventEmitter();
+  
 
   @ViewChild('treeContainer', {static: true}) treeContainer: ElementRef;
 
@@ -182,7 +186,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     const dataTypeArr = ['AccountConfig','InvoiceRule']
     this.dataTypeArr = dataTypeArr;
   }
-
+ 
   // ----------OnChanges Implementation----------
 
   ngOnChanges(changes: SimpleChanges) {
@@ -333,7 +337,9 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     }
 
     if( parentValue.dataType){
+    
       return this.findDataTypeParent(parentValue.dataType).values;
+      
     }
  
   }
@@ -463,13 +469,13 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   addRuleBool: boolean = false;
 
   addRuleSet(parent?: RuleSet): void {
-    // console.log(parent);    
+   
     if (this.disabled) {
       return;
     }
 
     parent = parent || this.data;
-
+    //console.log(this.data);    
     if (this.config.addRuleSet) {
       // this.config.addRuleSet(parent);
     } else {
@@ -477,6 +483,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     }
     this.handleTouched();
     this.handleDataChange();
+    //this.valueOnFieldChange.emit(this.data.dataType);
   }
 
   removeRuleSet(ruleset?: RuleSet, parent?: RuleSet): void {
@@ -515,13 +522,19 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   changeDataType(value: string){
+    this.valueOnFieldChange.emit(this.data.dataType);
+    console.log(this.data.dataType );
     console.log(value);
     if(this.findDataTypeParent(value) === undefined){
       this.hideRuleSet = true;  
+      //this.valueOnFieldChange.emit(value);
     }
     this.data.dataType = value;
+  
+    
     this.handleTouched();
     this.handleDataChange();
+    
   }
 
   changeCondition(value: string): void {

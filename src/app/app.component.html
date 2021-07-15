@@ -3,9 +3,11 @@
             [DataTypeBuilder]="dataTypeBuilder"
             [DataTypeParent]="dataTypeParent"
             [DataTypeChildren]="dataTypeChildren"
-            [persistValueOnFieldChange]='persistValueOnFieldChange'></query-builder>
+            [persistValueOnFieldChange]='persistValueOnFieldChange'
+            (valueOnFieldChange)="changeDataType($event)">
+          </query-builder>
 
-
+          
             
   {{ query | json }}  
 <router-outlet></router-outlet>
