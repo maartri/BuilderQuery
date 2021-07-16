@@ -304,8 +304,11 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
       return this.operatorsCache[field];
     }
     let operators = this.defaultEmptyList;
-    const fieldObject = this.config.fields[field];
+    const fieldObject = this.config.fields[field.toLowerCase()];
 
+    // console.log(field)
+    // console.log(this.config.fields[field.toLowerCase()])
+    
     if (this.config.getOperators) {
       return this.config.getOperators(field, fieldObject);
     }
@@ -349,10 +352,10 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   getFields2(entity: string): any{
-    // console.log(this.DataTypeParent);
-    // console.log(this.DataTypeChildren)
     var list = this.DataTypeChildren.find(x => x.field == entity);
-    console.log(list);
+    if(list === undefined){
+      return [];
+    }
     return list.values;
   }
 
@@ -367,15 +370,16 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   getInputType(field: string, operator: string): string {
+    // return 'string';
     if (this.config.getInputType) {
       return this.config.getInputType(field, operator);
     }
 
-    if (!this.config.fields[field]) {
+    if (!this.config.fields[field.toLowerCase()]) {
       throw new Error(`No configuration for field '${field}' could be found! Please add it to config.fields.`);
     }
 
-    const type = this.config.fields[field].type;
+    const type = this.config.fields[field.toLowerCase()].type;
     switch (operator) {
       case 'is null':
       case 'is not null':

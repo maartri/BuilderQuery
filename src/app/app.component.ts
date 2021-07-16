@@ -367,32 +367,55 @@ export class AppComponent {
 
   public config: QueryBuilderConfig = {
     fields: {
-      age: {name: 'Age', type: 'number'},
-      gender: {
-        name: 'Gender',
-        type: 'category',
-        options: [
-          {name: 'Male', value: 'm'},
-          {name: 'Female', value: 'f'}
-        ]
-      },
-      name: {name: 'Name', type: 'string'},
-      notes: {name: 'Notes', type: 'textarea', operators: ['=', '!=']},
-      educated: {name: 'College Degree?', type: 'boolean'},
-      birthday: {name: 'Birthday', type: 'date', operators: ['=', '<=', '>'],
-        defaultValue: (() => new Date())
-      },
-      school: {name: 'School', type: 'string', nullable: true},
-      occupation: {
-        name: 'Occupation',
-        type: 'category',
-        options: [
-          {name: 'Student', value: 'student'},
-          {name: 'Teacher', value: 'teacher'},
-          {name: 'Unemployed', value: 'unemployed'},
-          {name: 'Scientist', value: 'scientist'}
-        ]
-      }
+      // age: {name: 'Age', type: 'number'},
+      // gender: {
+      //   name: 'Gender',
+      //   type: 'category',
+      //   options: [
+      //     {name: 'Male', value: 'm'},
+      //     {name: 'Female', value: 'f'}
+      //   ]
+      // },
+      active: {name: 'Active', type: 'boolean'},
+      currency: {name: 'Currency', type: 'string'},
+      overchargeamount: {name: 'OverchargeAmount', type: 'number'},
+
+      overchargetype: {name: 'OverchargeType', type: 'string'},
+      underchargeamount: {name: 'UnderchargeAmount', type: 'string'},
+      underchargetype: {name: 'UnderchargeType', type: 'string'},
+      runaudit: {name: 'RunAudit', type: 'boolean'},
+      runtmsmatch: {name: 'RunTmsMatch', type: 'boolean'},
+      savetmsmatchdata: {name: 'SaveTmsMatchData', type: 'boolean'},
+      addtolerancesavings: {name: 'AddToleranceSavings', type: 'boolean'},
+      runpomatch: {name: 'RunPoMatch', type: 'boolean'},
+
+      priority: {name: 'Priority', type: 'number'},
+      resultaction: {name: 'ResultAction', type: 'boolean'},
+      reasoncode: {name: 'ReasonCode', type: 'boolean'},
+      actioncommentstemplate: {name: 'ActionCommentsTemplate', type: 'boolean'},
+      webresallocation: {name: 'WebResAllocation', type: 'boolean'},
+
+      pdfdocumenttype: {name: 'PDFDocumentType', type: 'boolean'},
+      property: {name: 'Property', type: 'string'},
+      propertytype: {name: 'PropertyType', type: 'string'},
+      operator: {name: 'Operator', type: 'boolean'},
+      value: {name: 'Value', type: 'string'},
+
+      
+      // birthday: {name: 'Birthday', type: 'date', operators: ['=', '<=', '>'],
+      //   defaultValue: (() => new Date())
+      // },
+      // school: {name: 'School', type: 'string', nullable: true},
+      // occupation: {
+      //   name: 'Occupation',
+      //   type: 'category',
+      //   options: [
+      //     {name: 'Student', value: 'student'},
+      //     {name: 'Teacher', value: 'teacher'},
+      //     {name: 'Unemployed', value: 'unemployed'},
+      //     {name: 'Scientist', value: 'scientist'}
+      //   ]
+      // }
     }
   };
 

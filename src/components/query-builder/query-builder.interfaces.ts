@@ -103,6 +103,7 @@ export interface QueryBuilderClassNames {
 
 export interface QueryBuilderConfig {
   fields: FieldMap;
+  fieldDropDown?: Array<string>,
   entities?: EntityMap;
   allowEmptyRulesets?: boolean;
   getOperators?: (fieldName: string, field: Field) => string[];

@@ -101,7 +101,7 @@
             </ng-container>
 
 
-            <!-- <ng-template #defaultField>
+            <ng-template #defaultField>
               <div [ngClass]="getClassNames('fieldControlSize')">
                 <select [ngClass]="getClassNames('fieldControl')" [(ngModel)]="rule.field" (ngModelChange)="changeField2($event)"
                   [disabled]="disabled">
@@ -110,9 +110,9 @@
                   </option>
                 </select>
               </div>
-            </ng-template> -->
+            </ng-template>
 
-            <ng-template #defaultField>
+            <!-- <ng-template #defaultField>
               <div [ngClass]="getClassNames('fieldControlSize')">
                 <select [ngClass]="getClassNames('fieldControl')" [(ngModel)]="rule.field" (ngModelChange)="changeField($event, rule)"
                   [disabled]="disabled">
@@ -121,7 +121,7 @@
                   </option>
                 </select>
               </div>
-            </ng-template>
+            </ng-template> -->
 
             <ng-container *ngIf="getOperatorTemplate() as template; else defaultOperator">
               <ng-container *ngTemplateOutlet="template; context: getOperatorContext(rule)"></ng-container>
@@ -178,7 +178,7 @@
             [parentEntityTemplate]="parentEntityTemplate || entityTemplate" [parentSwitchGroupTemplate]="parentSwitchGroupTemplate || switchGroupTemplate"
             [parentButtonGroupTemplate]="parentButtonGroupTemplate || buttonGroupTemplate" [parentRemoveButtonTemplate]="parentRemoveButtonTemplate || removeButtonTemplate"
             [parentEmptyWarningTemplate]="parentEmptyWarningTemplate || emptyWarningTemplate" [parentArrowIconTemplate]="parentArrowIconTemplate || arrowIconTemplate"
-            [parentValue]="data" [classNames]="classNames" [config]="config" [DataTypeBuilder]="DataTypeBuilder" [DataTypeParent]="DataTypeParent" [allowRuleset]="allowRuleset"
+            [parentValue]="data" [classNames]="classNames" [config]="config" [DataTypeBuilder]="DataTypeBuilder" [DataTypeChildren]="DataTypeChildren" [DataTypeParent]="DataTypeParent" [allowRuleset]="allowRuleset"
             [allowCollapse]="allowCollapse" [emptyMessage]="emptyMessage" [operatorMap]="operatorMap" >
           </query-builder>
 
