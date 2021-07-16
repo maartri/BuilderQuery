@@ -129,6 +129,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   @Input() DataTypeBuilder: DataTypeBuilder = { fields: [] }
   @Input() DataTypeParent: Array<DataTypeParent> = [];
   @Input() DataTypeChildren: Array<DataTypeChildren> = [];
+  @Input() DefaultDataType: string;
   // End
 
   // For ControlValueAccessor interface
@@ -337,9 +338,13 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   hideRuleSet: boolean = false;
+
   getDataType(entity: string, parentValue: any) {
 
     if(parentValue === undefined){
+      if(this.DefaultDataType){
+          return [this.DefaultDataType]
+      }
       return  (this.DataTypeParent).map((value) => {
         return value.field;
       });

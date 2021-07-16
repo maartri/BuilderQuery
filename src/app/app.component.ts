@@ -11,6 +11,8 @@ import { QueryBuilderService } from '../components/query-builder/query-builder.s
 export class AppComponent {
   public queryCtrl: FormControl;
 
+  DefaultDataType: string = "AccountConfig"
+
   public dataTypeParent: Array<DataTypeParent> = [
     {
       field: 'AccountConfig',
@@ -401,7 +403,7 @@ export class AppComponent {
       operator: {name: 'Operator', type: 'boolean'},
       value: {name: 'Value', type: 'string'},
 
-      
+
       // birthday: {name: 'Birthday', type: 'date', operators: ['=', '<=', '>'],
       //   defaultValue: (() => new Date())
       // },
