@@ -106,6 +106,7 @@ export interface QueryBuilderConfig {
   fieldDropDown?: Array<string>,
   entities?: EntityMap;
   allowEmptyRulesets?: boolean;
+  conditionQueryBuilderConfig?: QueryBuilderConfig,
   getOperators?: (fieldName: string, field: Field) => string[];
   getInputType?: (field: string, operator: string) => string;
   getOptions?: (field: string) => Option[];
